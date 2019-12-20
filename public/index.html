@@ -8,6 +8,7 @@
   </head>
   <body>
     <h1>TODOs getting completed soon</h1>
+    <div id="todos"></div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       axios.post('/api/todos', {
@@ -15,6 +16,24 @@
       })
       .then(function (response) {
         console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      axios.get('/api/todos')
+      .then(function (response) {
+        console.log(response);
+
+        const todosEl = document.getElementById("todos")
+
+        const todoElStr = response.data.map(todo => `<div>${todo.task}</div>`)
+
+        const innerHtml = todoElStr.join("\n<hr />\n")
+
+        todosEl.innerHTML = innerHtml
+
+        console.log(innerHtml);
       })
       .catch(function (error) {
         console.log(error);
